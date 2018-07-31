@@ -128,6 +128,13 @@ class SoapBinding(Binding):
         # If the client wants to return the raw data then let's do that.
         if client.settings.raw_response:
             return response
+       
+        # DEBUG 
+        if getattr(client, "debug", False) == True:
+            print "\n --- Message sent --- \nto: {} \nheader:{} \nmessage:\n".format(options['address'], http_headers)
+            print etree.tostring(envelope, pretty_print=True)
+            print "\n --- Message recieved --- \n"
+            print response.content
 
         return self.process_reply(client, operation_obj, response)
 
